@@ -16,6 +16,15 @@
 			"transformations": [
 				{
 					"name": "derivedColumn1"
+				},
+				{
+					"name": "split1"
+				},
+				{
+					"name": "aggregate1"
+				},
+				{
+					"name": "derivedColumn2"
 				}
 			],
 			"scriptLines": [
@@ -31,7 +40,29 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> source1",
-				"source1 derive(nombre = ERROR_FUNCTION('')) ~> derivedColumn1"
+				"source1 derive(nombre = initCap(lower(trim(nombre))),",
+				"          ciudad = case(\r",
+				"    upper(trim(ciudad)) == 'SCZ', 'Santa Cruz de la Sierra',\r",
+				"    upper(trim(ciudad)) == 'CBBA', 'Cochabamba',\r",
+				"    upper(trim(ciudad)) == 'LPZ', 'La Paz',\r",
+				"    initCap(lower(trim(ciudad)))\r",
+				"),",
+				"          email =     iif(\r",
+				"        endsWith(trim(email), '@'), \r",
+				"        concat(trim(email), 'correo.bo'), \r",
+				"        lower(trim(email))\r",
+				"    )\r",
+				") ~> derivedColumn1",
+				"derivedColumn1 split(!isNull(cliente_id) && !isNull(nombre) && !isNull(ciudad) && !isNull(email) && email !='',",
+				"     disjoint: false) ~> split1@(validos, rechazados)",
+				"split1@validos aggregate(groupBy(cliente_id),",
+				"     nombre = first(nombre),",
+				"          email = first(email),",
+				"          telefono = first(telefono),",
+				"          ciudad = first(ciudad),",
+				"          fecha_registro = first(fecha_registro),",
+				"          segmento = first(segmento)) ~> aggregate1",
+				"aggregate1 derive(fecha_registro = toDate(fecha_registro)) ~> derivedColumn2"
 			]
 		}
 	}
