@@ -1,0 +1,58 @@
+{
+	"name": "ventas_sql",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_omnicanal",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "sql"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "venta_id",
+				"type": "varchar"
+			},
+			{
+				"name": "fecha_venta",
+				"type": "date"
+			},
+			{
+				"name": "cliente_id",
+				"type": "varchar"
+			},
+			{
+				"name": "sucursal_id",
+				"type": "varchar"
+			},
+			{
+				"name": "canal",
+				"type": "nvarchar"
+			},
+			{
+				"name": "medio_pago",
+				"type": "nvarchar"
+			},
+			{
+				"name": "promocion_id",
+				"type": "varchar"
+			},
+			{
+				"name": "estado_venta",
+				"type": "nvarchar"
+			},
+			{
+				"name": "total_venta",
+				"type": "decimal",
+				"precision": 12,
+				"scale": 2
+			}
+		],
+		"typeProperties": {
+			"schema": "ventas_omnicanal",
+			"table": "ventas"
+		}
+	}
+}

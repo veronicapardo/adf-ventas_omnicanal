@@ -1,0 +1,44 @@
+{
+	"name": "sucursales_sql",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_omnicanal",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "sql"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "sucursal_id",
+				"type": "varchar"
+			},
+			{
+				"name": "nombre_sucursal",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ciudad",
+				"type": "nvarchar"
+			},
+			{
+				"name": "zona",
+				"type": "nvarchar"
+			},
+			{
+				"name": "formato",
+				"type": "nvarchar"
+			},
+			{
+				"name": "fecha_apertura",
+				"type": "date"
+			}
+		],
+		"typeProperties": {
+			"schema": "ventas_omnicanal",
+			"table": "sucursales"
+		}
+	}
+}

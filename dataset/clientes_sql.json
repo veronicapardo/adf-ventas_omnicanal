@@ -1,0 +1,57 @@
+{
+	"name": "clientes_sql",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_omnicanal",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "sql"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "cliente_id",
+				"type": "varchar"
+			},
+			{
+				"name": "nombre",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ciudad",
+				"type": "nvarchar"
+			},
+			{
+				"name": "segmento",
+				"type": "nvarchar"
+			},
+			{
+				"name": "fecha_registro",
+				"type": "date"
+			},
+			{
+				"name": "edad",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "nivel_fidelidad",
+				"type": "nvarchar"
+			},
+			{
+				"name": "email",
+				"type": "nvarchar"
+			},
+			{
+				"name": "telefono",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "ventas_omnicanal",
+			"table": "clientes"
+		}
+	}
+}

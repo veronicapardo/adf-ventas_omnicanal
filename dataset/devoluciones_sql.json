@@ -1,0 +1,55 @@
+{
+	"name": "devoluciones_sql",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_omnicanal",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "sql"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "devolucion_id",
+				"type": "varchar"
+			},
+			{
+				"name": "venta_id",
+				"type": "varchar"
+			},
+			{
+				"name": "producto_id",
+				"type": "varchar"
+			},
+			{
+				"name": "fecha_devolucion",
+				"type": "date"
+			},
+			{
+				"name": "cantidad",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "motivo",
+				"type": "nvarchar"
+			},
+			{
+				"name": "monto_devuelto",
+				"type": "decimal",
+				"precision": 12,
+				"scale": 2
+			},
+			{
+				"name": "estado_devolucion",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "ventas_omnicanal",
+			"table": "devoluciones"
+		}
+	}
+}

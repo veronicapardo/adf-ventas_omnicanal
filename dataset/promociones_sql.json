@@ -1,0 +1,54 @@
+{
+	"name": "promociones_sql",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_omnicanal",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "sql"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "promocion_id",
+				"type": "varchar"
+			},
+			{
+				"name": "nombre_promocion",
+				"type": "nvarchar"
+			},
+			{
+				"name": "tipo_descuento",
+				"type": "nvarchar"
+			},
+			{
+				"name": "valor_descuento",
+				"type": "decimal",
+				"precision": 8,
+				"scale": 2
+			},
+			{
+				"name": "fecha_inicio",
+				"type": "date"
+			},
+			{
+				"name": "fecha_fin",
+				"type": "date"
+			},
+			{
+				"name": "canal_aplicable",
+				"type": "nvarchar"
+			},
+			{
+				"name": "estado_promocion",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "ventas_omnicanal",
+			"table": "promociones"
+		}
+	}
+}
