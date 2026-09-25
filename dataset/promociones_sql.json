@@ -1,5 +1,5 @@
 {
-	"name": "promociones_sql",
+	"name": "ventas_sql",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "sql_omnicanal",
@@ -12,43 +12,47 @@
 		"type": "AzureSqlTable",
 		"schema": [
 			{
+				"name": "venta_id",
+				"type": "varchar"
+			},
+			{
+				"name": "fecha_venta",
+				"type": "date"
+			},
+			{
+				"name": "cliente_id",
+				"type": "varchar"
+			},
+			{
+				"name": "sucursal_id",
+				"type": "varchar"
+			},
+			{
+				"name": "canal",
+				"type": "nvarchar"
+			},
+			{
+				"name": "medio_pago",
+				"type": "nvarchar"
+			},
+			{
 				"name": "promocion_id",
 				"type": "varchar"
 			},
 			{
-				"name": "nombre_promocion",
+				"name": "estado_venta",
 				"type": "nvarchar"
 			},
 			{
-				"name": "tipo_descuento",
-				"type": "nvarchar"
-			},
-			{
-				"name": "valor_descuento",
+				"name": "total_venta",
 				"type": "decimal",
-				"precision": 8,
+				"precision": 12,
 				"scale": 2
-			},
-			{
-				"name": "fecha_inicio",
-				"type": "date"
-			},
-			{
-				"name": "fecha_fin",
-				"type": "date"
-			},
-			{
-				"name": "canal_aplicable",
-				"type": "nvarchar"
-			},
-			{
-				"name": "estado_promocion",
-				"type": "nvarchar"
 			}
 		],
 		"typeProperties": {
 			"schema": "ventas_omnicanal",
-			"table": "promociones"
+			"table": "ventas"
 		}
 	}
 }
