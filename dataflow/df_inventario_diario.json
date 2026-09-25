@@ -12,8 +12,20 @@
 					"name": "source1"
 				}
 			],
-			"sinks": [],
-			"transformations": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "inventario_diario_sql",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "derivedColumn1"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
 				"          inventario_id as string,",
@@ -28,7 +40,46 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> source1"
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source1 derive(fecha_inventario = toDate(trim(fecha_inventario))\r",
+				",",
+				"          entradas = toInteger(trim(entradas)),",
+				"          stock_inicial = toInteger(trim(stock_inicial)),",
+				"          salidas = toInteger(trim(salidas)),",
+				"          stock_final = toInteger(trim(stock_final)),",
+				"          punto_reorden = toInteger(trim(punto_reorden))) ~> derivedColumn1",
+				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          inventario_id as string,",
+				"          fecha as date,",
+				"          sucursal_id as string,",
+				"          producto_id as string,",
+				"          stock_inicial as integer,",
+				"          entradas as integer,",
+				"          salidas as integer,",
+				"          stock_final as integer,",
+				"          stock_minimo as integer",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          inventario_id,",
+				"          fecha = fecha_inventario,",
+				"          sucursal_id,",
+				"          producto_id,",
+				"          stock_inicial,",
+				"          entradas,",
+				"          salidas,",
+				"          stock_final,",
+				"          stock_minimo = punto_reorden",
+				"     )) ~> sink1"
 			]
 		}
 	}
