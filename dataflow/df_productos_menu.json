@@ -1,5 +1,5 @@
 {
-	"name": "dataflow1",
+	"name": "df_productos_menu",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
@@ -15,7 +15,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "pagos_sql",
+						"referenceName": "productos_menu_sql",
 						"type": "DatasetReference"
 					},
 					"name": "sink1"
@@ -60,11 +60,9 @@
 				"          producto_id as string,",
 				"          nombre_producto as string,",
 				"          categoria as string,",
-				"          marca as string,",
 				"          precio_lista as decimal(12,2),",
-				"          costo_unitario as decimal(12,2),",
-				"          proveedor as string,",
-				"          estado_producto as string",
+				"          costo_estimado as decimal(12,2),",
+				"          disponible as string",
 				"     ),",
 				"     deletable:false,",
 				"     insertable:true,",
@@ -73,15 +71,7 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError',",
-				"     mapColumn(",
-				"          producto_id,",
-				"          nombre_producto,",
-				"          categoria,",
-				"          precio_lista = precio_texto,",
-				"          costo_unitario = costo_estimado,",
-				"          estado_producto = disponible",
-				"     )) ~> sink1"
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
 			]
 		}
 	}
