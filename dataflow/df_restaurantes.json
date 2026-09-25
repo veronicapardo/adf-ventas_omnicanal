@@ -24,6 +24,9 @@
 			"transformations": [
 				{
 					"name": "derivedColumn1"
+				},
+				{
+					"name": "aggregate1"
 				}
 			],
 			"scriptLines": [
@@ -39,7 +42,12 @@
 				"     ignoreNoFilesFound: false) ~> source1",
 				"source1 derive(calificacion_promedio = toDecimal(calificacion_promedio),",
 				"          activo = iif(toString(activo) == 'No', 'No', 'Sí')) ~> derivedColumn1",
-				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"derivedColumn1 aggregate(groupBy(restaurante_id),",
+				"     nombre_restaurante = first(nombre_restaurante),",
+				"          tipo_cocina = first(tipo_cocina),",
+				"          calificacion_promedio = first(calificacion_promedio),",
+				"          activo = first(activo)) ~> aggregate1",
+				"aggregate1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          restaurante_id as string,",
