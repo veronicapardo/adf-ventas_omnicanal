@@ -12,40 +12,30 @@
 		"type": "AzureSqlTable",
 		"schema": [
 			{
-				"name": "producto_id",
+				"name": "pago_id",
 				"type": "varchar"
 			},
 			{
-				"name": "nombre_producto",
+				"name": "pedido_id",
+				"type": "varchar"
+			},
+			{
+				"name": "fecha_pago",
+				"type": "date"
+			},
+			{
+				"name": "metodo_pago",
 				"type": "nvarchar"
 			},
 			{
-				"name": "categoria",
+				"name": "estado_pago",
 				"type": "nvarchar"
 			},
 			{
-				"name": "marca",
-				"type": "nvarchar"
-			},
-			{
-				"name": "precio_lista",
+				"name": "monto_pagado",
 				"type": "decimal",
 				"precision": 12,
 				"scale": 2
-			},
-			{
-				"name": "costo_unitario",
-				"type": "decimal",
-				"precision": 12,
-				"scale": 2
-			},
-			{
-				"name": "proveedor",
-				"type": "nvarchar"
-			},
-			{
-				"name": "estado_producto",
-				"type": "nvarchar"
 			}
 		],
 		"typeProperties": {

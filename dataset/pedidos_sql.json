@@ -12,38 +12,71 @@
 		"type": "AzureSqlTable",
 		"schema": [
 			{
+				"name": "pedido_id",
+				"type": "varchar"
+			},
+			{
+				"name": "fecha_pedido",
+				"type": "date"
+			},
+			{
+				"name": "hora_pedido",
+				"type": "time",
+				"scale": 7
+			},
+			{
+				"name": "cliente_id",
+				"type": "varchar"
+			},
+			{
+				"name": "sucursal_id",
+				"type": "varchar"
+			},
+			{
+				"name": "canal",
+				"type": "nvarchar"
+			},
+			{
+				"name": "tipo_servicio",
+				"type": "nvarchar"
+			},
+			{
+				"name": "estado_pedido",
+				"type": "nvarchar"
+			},
+			{
 				"name": "promocion_id",
 				"type": "varchar"
 			},
 			{
-				"name": "nombre_promocion",
-				"type": "nvarchar"
-			},
-			{
-				"name": "tipo_descuento",
-				"type": "nvarchar"
-			},
-			{
-				"name": "valor_descuento",
+				"name": "subtotal",
 				"type": "decimal",
-				"precision": 8,
+				"precision": 12,
 				"scale": 2
 			},
 			{
-				"name": "fecha_inicio",
-				"type": "date"
+				"name": "costo_delivery",
+				"type": "decimal",
+				"precision": 12,
+				"scale": 2
 			},
 			{
-				"name": "fecha_fin",
-				"type": "date"
+				"name": "descuento",
+				"type": "decimal",
+				"precision": 12,
+				"scale": 2
 			},
 			{
-				"name": "canal_aplicable",
-				"type": "nvarchar"
+				"name": "impuesto",
+				"type": "decimal",
+				"precision": 12,
+				"scale": 2
 			},
 			{
-				"name": "estado_promocion",
-				"type": "nvarchar"
+				"name": "total_pedido",
+				"type": "decimal",
+				"precision": 12,
+				"scale": 2
 			}
 		],
 		"typeProperties": {

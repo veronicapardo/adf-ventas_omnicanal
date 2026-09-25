@@ -16,7 +16,7 @@
 				"type": "varchar"
 			},
 			{
-				"name": "fecha",
+				"name": "fecha_inventario",
 				"type": "date"
 			},
 			{
@@ -48,7 +48,7 @@
 				"precision": 10
 			},
 			{
-				"name": "stock_minimo",
+				"name": "punto_reorden",
 				"type": "int",
 				"precision": 10
 			}
