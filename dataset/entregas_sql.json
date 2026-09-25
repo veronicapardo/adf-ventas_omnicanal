@@ -1,5 +1,5 @@
 {
-	"name": "devoluciones_sql",
+	"name": "entregas_sql",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "sql_omnicanal",
@@ -49,7 +49,7 @@
 		],
 		"typeProperties": {
 			"schema": "ventas_omnicanal",
-			"table": "devoluciones"
+			"table": "entregas"
 		}
 	}
 }

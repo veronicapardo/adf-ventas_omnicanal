@@ -1,5 +1,5 @@
 {
-	"name": "productos_menu_sql",
+	"name": "repartidores_sql",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "sql_omnicanal",
@@ -12,33 +12,33 @@
 		"type": "AzureSqlTable",
 		"schema": [
 			{
-				"name": "sucursal_id",
+				"name": "repartidor_id",
 				"type": "varchar"
 			},
 			{
-				"name": "nombre_sucursal",
+				"name": "nombre_repartidor",
 				"type": "nvarchar"
 			},
 			{
-				"name": "ciudad",
+				"name": "tipo_vehiculo",
 				"type": "nvarchar"
 			},
 			{
-				"name": "zona",
+				"name": "ciudad_base",
 				"type": "nvarchar"
 			},
 			{
-				"name": "formato",
-				"type": "nvarchar"
-			},
-			{
-				"name": "fecha_apertura",
+				"name": "fecha_alta",
 				"type": "date"
+			},
+			{
+				"name": "activo",
+				"type": "varchar"
 			}
 		],
 		"typeProperties": {
 			"schema": "ventas_omnicanal",
-			"table": "productos_menu"
+			"table": "repartidores"
 		}
 	}
 }

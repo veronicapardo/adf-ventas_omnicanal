@@ -1,5 +1,5 @@
 {
-	"name": "productos_menu_sql",
+	"name": "sucursales_sql",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "sql_omnicanal",
@@ -16,6 +16,10 @@
 				"type": "varchar"
 			},
 			{
+				"name": "restaurante_id",
+				"type": "varchar"
+			},
+			{
 				"name": "nombre_sucursal",
 				"type": "nvarchar"
 			},
@@ -28,17 +32,22 @@
 				"type": "nvarchar"
 			},
 			{
-				"name": "formato",
+				"name": "direccion",
 				"type": "nvarchar"
 			},
 			{
-				"name": "fecha_apertura",
-				"type": "date"
+				"name": "capacidad_mesas",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "tiene_delivery",
+				"type": "varchar"
 			}
 		],
 		"typeProperties": {
 			"schema": "ventas_omnicanal",
-			"table": "productos_menu"
+			"table": "sucursales"
 		}
 	}
 }

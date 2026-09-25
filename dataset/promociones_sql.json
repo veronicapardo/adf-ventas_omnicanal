@@ -1,5 +1,5 @@
 {
-	"name": "ventas_sql",
+	"name": "promociones_sql",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "sql_omnicanal",
@@ -52,7 +52,7 @@
 		],
 		"typeProperties": {
 			"schema": "ventas_omnicanal",
-			"table": "ventas"
+			"table": "promociones"
 		}
 	}
 }

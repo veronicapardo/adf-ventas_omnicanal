@@ -1,5 +1,5 @@
 {
-	"name": "productos_sql",
+	"name": "pagos_sql",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "sql_omnicanal",
@@ -50,7 +50,7 @@
 		],
 		"typeProperties": {
 			"schema": "ventas_omnicanal",
-			"table": "productos"
+			"table": "pagos"
 		}
 	}
 }

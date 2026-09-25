@@ -1,5 +1,5 @@
 {
-	"name": "detalle_ventas_sql",
+	"name": "detalle_pedidos_sql",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "sql_omnicanal",
@@ -16,7 +16,7 @@
 				"type": "varchar"
 			},
 			{
-				"name": "venta_id",
+				"name": "pedido_id",
 				"type": "varchar"
 			},
 			{
@@ -35,13 +35,13 @@
 				"scale": 2
 			},
 			{
-				"name": "descuento",
+				"name": "descuento_linea",
 				"type": "decimal",
-				"precision": 5,
+				"precision": 12,
 				"scale": 2
 			},
 			{
-				"name": "subtotal",
+				"name": "total_linea",
 				"type": "decimal",
 				"precision": 12,
 				"scale": 2
@@ -49,7 +49,7 @@
 		],
 		"typeProperties": {
 			"schema": "ventas_omnicanal",
-			"table": "detalle_ventas"
+			"table": "detalle_pedidos"
 		}
 	}
 }

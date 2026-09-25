@@ -1,5 +1,5 @@
 {
-	"name": "productos_menu_sql",
+	"name": "restaurantes_sql",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "sql_omnicanal",
@@ -12,33 +12,31 @@
 		"type": "AzureSqlTable",
 		"schema": [
 			{
-				"name": "sucursal_id",
+				"name": "restaurante_id",
 				"type": "varchar"
 			},
 			{
-				"name": "nombre_sucursal",
+				"name": "nombre_restaurante",
 				"type": "nvarchar"
 			},
 			{
-				"name": "ciudad",
+				"name": "tipo_cocina",
 				"type": "nvarchar"
 			},
 			{
-				"name": "zona",
-				"type": "nvarchar"
+				"name": "calificacion_promedio",
+				"type": "decimal",
+				"precision": 3,
+				"scale": 2
 			},
 			{
-				"name": "formato",
-				"type": "nvarchar"
-			},
-			{
-				"name": "fecha_apertura",
-				"type": "date"
+				"name": "activo",
+				"type": "varchar"
 			}
 		],
 		"typeProperties": {
 			"schema": "ventas_omnicanal",
-			"table": "productos_menu"
+			"table": "restaurantes"
 		}
 	}
 }
