@@ -1,0 +1,104 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Nombre de instancia de Data Factory",
+			"defaultValue": "adf-ucb-sisger-us-9532692"
+		},
+		"sa_omnicanal_accountKey": {
+			"type": "secureString",
+			"metadata": "Cadena protegida para \"accountKey\"de \"sa_omnicanal\""
+		},
+		"sql_omnicanal_password": {
+			"type": "secureString",
+			"metadata": "Cadena protegida para \"password\"de \"sql_omnicanal\""
+		},
+		"sa_omnicanal_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://saucbsisger9532692.dfs.core.windows.net/"
+		},
+		"sql_omnicanal_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "sql-ucb-sisger-par269551312.database.windows.net"
+		},
+		"sql_omnicanal_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "db_ventas"
+		},
+		"sql_omnicanal_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "veronica"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI de la cuenta de almacenamiento que contiene las plantillas de ARM vinculadas."
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Token de SAS para la cuenta de almacenamiento que contiene las plantillas de ARM vinculadas"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "adf-ucb-sisger-us-9532692_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"sa_omnicanal_accountKey": {
+						"value": "[parameters('sa_omnicanal_accountKey')]"
+					},
+					"sql_omnicanal_password": {
+						"value": "[parameters('sql_omnicanal_password')]"
+					},
+					"sa_omnicanal_properties_typeProperties_url": {
+						"value": "[parameters('sa_omnicanal_properties_typeProperties_url')]"
+					},
+					"sql_omnicanal_properties_typeProperties_server": {
+						"value": "[parameters('sql_omnicanal_properties_typeProperties_server')]"
+					},
+					"sql_omnicanal_properties_typeProperties_database": {
+						"value": "[parameters('sql_omnicanal_properties_typeProperties_database')]"
+					},
+					"sql_omnicanal_properties_typeProperties_userName": {
+						"value": "[parameters('sql_omnicanal_properties_typeProperties_userName')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "adf-ucb-sisger-us-9532692_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'adf-ucb-sisger-us-9532692_ArmTemplate_0')]"
+			]
+		}
+	]
+}
