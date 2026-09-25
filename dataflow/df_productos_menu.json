@@ -27,9 +27,6 @@
 				},
 				{
 					"name": "split1"
-				},
-				{
-					"name": "derivedColumn2"
 				}
 			],
 			"scriptLines": [
@@ -45,16 +42,26 @@
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> source1",
 				"source1 derive(nombre_producto = initCap(lower(trim(nombre_producto))),",
-				"          categoria = initCap(lower(trim(categoria))),",
+				"          categoria = iif(isNull(categoria) || toString(categoria) == 'NULL' || trim(toString(categoria)) == '', 'General', initCap(lower(trim(toString(categoria))))),",
 				"          disponible = initCap(lower(trim(disponible))),",
-				"          precio_texto = replace(replace(trim(precio_lista),'Bs ',''),',','.'),",
-				"          costo_estimado = replace(replace(trim(costo_estimado),'Bs ',''),',','.')) ~> derivedColumn1",
+				"          precio_texto = iif(\r",
+				"    isNull(precio_lista) || toString(precio_lista) == 'NULL' || trim(toString(precio_lista)) == '',\r",
+				"    toDecimal(null()),\r",
+				"    iif(\r",
+				"        toDecimal(regexReplace(toString(precio_lista), '[^0-9\\\\.-]', ''), 10, 2) <= 0.00,\r",
+				"        toDecimal(null()),\r",
+				"        toDecimal(regexReplace(toString(precio_lista), '[^0-9\\\\.-]', ''), 10, 2)\r",
+				"    )\r",
+				"),",
+				"          costo_estimado = iif(\r",
+				"    isNull(costo_estimado) || toString(costo_estimado) == 'NULL' || trim(toString(costo_estimado)) == '',\r",
+				"    toDecimal(null()),\r",
+				"    toDecimal(regexReplace(toString(costo_estimado), '[^0-9\\\\.-]', ''), 10, 2)\r",
+				"),",
+				"          producto_id = trim(toString(producto_id))) ~> derivedColumn1",
 				"derivedColumn1 split(!isNull(producto_id) && !isNull(precio_lista) && !isNull(costo_estimado),",
 				"     disjoint: false) ~> split1@(validos, rechazados)",
-				"split1@validos derive(precio_texto = toDecimal(precio_texto),",
-				"          costo_estimado = toDecimal(costo_estimado),",
-				"          precio_lista = toDecimal(precio_lista)) ~> derivedColumn2",
-				"derivedColumn2 sink(allowSchemaDrift: true,",
+				"split1@validos sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          producto_id as string,",
@@ -71,7 +78,15 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          producto_id,",
+				"          nombre_producto,",
+				"          categoria,",
+				"          precio_lista,",
+				"          costo_estimado,",
+				"          disponible",
+				"     )) ~> sink1"
 			]
 		}
 	}
