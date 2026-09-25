@@ -440,10 +440,10 @@
 							"name": "split1"
 						},
 						{
-							"name": "aggregate1"
+							"name": "derivedColumn2"
 						},
 						{
-							"name": "derivedColumn2"
+							"name": "aggregate1"
 						}
 					],
 					"scriptLines": [
@@ -473,6 +473,7 @@
 						"    )) ~> derivedColumn1",
 						"derivedColumn1 split(!isNull(cliente_id) && !isNull(nombre) && !isNull(ciudad) && !isNull(email) && email !='',",
 						"     disjoint: false) ~> split1@(validos, rechazados)",
+						"aggregate1 derive(fecha_registro = toDate(fecha_registro)) ~> derivedColumn2",
 						"split1@validos aggregate(groupBy(cliente_id),",
 						"     nombre = first(nombre),",
 						"          email = first(email),",
@@ -480,7 +481,6 @@
 						"          ciudad = first(ciudad),",
 						"          fecha_registro = first(fecha_registro),",
 						"          segmento = first(segmento)) ~> aggregate1",
-						"aggregate1 derive(fecha_registro = toDate(fecha_registro)) ~> derivedColumn2",
 						"derivedColumn2 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     input(",
