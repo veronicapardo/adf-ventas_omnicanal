@@ -12,38 +12,43 @@
 		"type": "AzureSqlTable",
 		"schema": [
 			{
-				"name": "devolucion_id",
+				"name": "entrega_id",
 				"type": "varchar"
 			},
 			{
-				"name": "venta_id",
+				"name": "pedido_id",
 				"type": "varchar"
 			},
 			{
-				"name": "producto_id",
+				"name": "repartidor_id",
 				"type": "varchar"
 			},
 			{
-				"name": "fecha_devolucion",
-				"type": "date"
+				"name": "hora_salida",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
 			},
 			{
-				"name": "cantidad",
-				"type": "int",
-				"precision": 10
+				"name": "hora_entrega",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
 			},
 			{
-				"name": "motivo",
-				"type": "nvarchar"
-			},
-			{
-				"name": "monto_devuelto",
+				"name": "tiempo_entrega_min",
 				"type": "decimal",
-				"precision": 12,
+				"precision": 6,
 				"scale": 2
 			},
 			{
-				"name": "estado_devolucion",
+				"name": "distancia_km",
+				"type": "decimal",
+				"precision": 6,
+				"scale": 2
+			},
+			{
+				"name": "estado_entrega",
 				"type": "nvarchar"
 			}
 		],
