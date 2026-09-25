@@ -3067,7 +3067,7 @@
 						"          zona = initCap(lower(trim(zona))),",
 						"          direccion = initCap(lower(trim(direccion))),",
 						"          nombre_sucursal = initCap(lower(trim(nombre_sucursal)))) ~> derivedColumn1",
-						"derivedColumn1 split(! isInteger(capacidad_mesas),",
+						"derivedColumn1 split(!isInteger(capacidad_mesas) || restaurante_id == 'RES999',",
 						"     disjoint: false) ~> split1@(rechazado, valido)",
 						"split1@valido derive(capacidad_mesas = toInteger(capacidad_mesas)) ~> derivedColumn2",
 						"derivedColumn2 sink(allowSchemaDrift: true,",
