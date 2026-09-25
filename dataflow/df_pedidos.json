@@ -52,7 +52,7 @@
 				"          descuento = toDecimal(descuento),",
 				"          impuesto = toDecimal(impuesto),",
 				"          total_pedido = toDecimal(total_pedido),",
-				"          fecha_pedido = toDate(fecha_pedido)) ~> derivedColumn1",
+				"          fecha_pedido = iif(isNull(toDate(fecha_pedido, 'yyyy-MM-dd')), currentTimestamp(), toTimestamp(fecha_pedido, 'yyyy-MM-dd'))) ~> derivedColumn1",
 				"derivedColumn1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
