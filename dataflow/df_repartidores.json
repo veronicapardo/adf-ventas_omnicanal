@@ -24,6 +24,9 @@
 			"transformations": [
 				{
 					"name": "derivedColumn1"
+				},
+				{
+					"name": "aggregate1"
 				}
 			],
 			"scriptLines": [
@@ -46,10 +49,15 @@
 				"    upper(trim(toString(ciudad_base))) == 'CBA', 'Cochabamba',\r",
 				"    upper(trim(toString(ciudad_base))) == 'LPZ', 'La Paz',\r",
 				"    initCap(lower(trim(toString(ciudad_base))))\r",
-				")\r",
-				",",
+				"),",
 				"          activo = iif(toString(activo) == 'No', 'No', 'Sí')) ~> derivedColumn1",
-				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"derivedColumn1 aggregate(groupBy(repartidor_id),",
+				"     nombre_repartidor = first(nombre_repartidor),",
+				"          tipo_vehiculo = first(tipo_vehiculo),",
+				"          ciudad_base = first(ciudad_base),",
+				"          fecha_alta = first(fecha_alta),",
+				"          activo = first(activo)) ~> aggregate1",
+				"aggregate1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          repartidor_id as string,",
