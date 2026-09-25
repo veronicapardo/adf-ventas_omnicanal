@@ -24,6 +24,9 @@
 			"transformations": [
 				{
 					"name": "derivedColumn1"
+				},
+				{
+					"name": "aggregate1"
 				}
 			],
 			"scriptLines": [
@@ -50,7 +53,13 @@
 				"),",
 				"          porcentaje_descuento = iif(isNull(porcentaje_descuento) || trim(toString(porcentaje_descuento)) == '' || toString(porcentaje_descuento) == 'NULL' || toInteger(porcentaje_descuento) > 100 || toInteger(porcentaje_descuento) < 0, toInteger(null()), toInteger(porcentaje_descuento)),",
 				"          canal_aplicable = iif(isNull(canal_aplicable) || toString(canal_aplicable) == 'NULL' || trim(toString(canal_aplicable)) == '', toString(null()), initCap(lower(trim(toString(canal_aplicable)))))) ~> derivedColumn1",
-				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"derivedColumn1 aggregate(groupBy(promocion_id),",
+				"     nombre_promocion = first(nombre_promocion),",
+				"          fecha_inicio = first(fecha_inicio),",
+				"          fecha_fin = first(fecha_fin),",
+				"          porcentaje_descuento = first(porcentaje_descuento),",
+				"          canal_aplicable = first(canal_aplicable)) ~> aggregate1",
+				"aggregate1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          promocion_id as string,",
@@ -70,7 +79,7 @@
 				"     errorHandlingOption: 'stopOnFirstError',",
 				"     mapColumn(",
 				"          promocion_id,",
-				"          nombre_promocion,",
+				"          nombre_promocion = promocion_id,",
 				"          fecha_inicio,",
 				"          fecha_fin,",
 				"          porcentaje_descuento,",
