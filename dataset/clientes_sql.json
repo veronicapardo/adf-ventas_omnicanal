@@ -20,11 +20,15 @@
 				"type": "nvarchar"
 			},
 			{
-				"name": "ciudad",
+				"name": "email",
 				"type": "nvarchar"
 			},
 			{
-				"name": "segmento",
+				"name": "telefono",
+				"type": "varchar"
+			},
+			{
+				"name": "ciudad",
 				"type": "nvarchar"
 			},
 			{
@@ -32,21 +36,8 @@
 				"type": "date"
 			},
 			{
-				"name": "edad",
-				"type": "tinyint",
-				"precision": 3
-			},
-			{
-				"name": "nivel_fidelidad",
+				"name": "segmento",
 				"type": "nvarchar"
-			},
-			{
-				"name": "email",
-				"type": "nvarchar"
-			},
-			{
-				"name": "telefono",
-				"type": "varchar"
 			}
 		],
 		"typeProperties": {
