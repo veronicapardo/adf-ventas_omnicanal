@@ -79,7 +79,7 @@
 				"     errorHandlingOption: 'stopOnFirstError',",
 				"     mapColumn(",
 				"          promocion_id,",
-				"          nombre_promocion = promocion_id,",
+				"          nombre_promocion,",
 				"          fecha_inicio,",
 				"          fecha_fin,",
 				"          porcentaje_descuento,",
