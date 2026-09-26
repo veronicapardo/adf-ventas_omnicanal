@@ -2229,6 +2229,9 @@
 					"transformations": [
 						{
 							"name": "derivedColumn1"
+						},
+						{
+							"name": "aggregate1"
 						}
 					],
 					"scriptLines": [
@@ -2248,7 +2251,14 @@
 						"          precio_unitario = toDecimal(precio_unitario),",
 						"          descuento_linea = toDecimal(descuento_linea),",
 						"          total_linea = toDecimal(total_linea)) ~> derivedColumn1",
-						"derivedColumn1 sink(allowSchemaDrift: true,",
+						"derivedColumn1 aggregate(groupBy(detalle_id),",
+						"     pedido_id = first(pedido_id),",
+						"          producto_id = first(producto_id),",
+						"          cantidad = first(cantidad),",
+						"          precio_unitario = first(precio_unitario),",
+						"          descuento_linea = first(descuento_linea),",
+						"          total_linea = first(total_linea)) ~> aggregate1",
+						"aggregate1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     input(",
 						"          detalle_id as string,",
@@ -2312,6 +2322,9 @@
 					"transformations": [
 						{
 							"name": "derivedColumn1"
+						},
+						{
+							"name": "aggregate1"
 						}
 					],
 					"scriptLines": [
@@ -2333,7 +2346,15 @@
 						"          distancia_km = toDecimal(trim(distancia_km)),",
 						"          hora_salida = toTimestamp(hora_salida),",
 						"          hora_entrega = toTimestamp(hora_entrega)) ~> derivedColumn1",
-						"derivedColumn1 sink(allowSchemaDrift: true,",
+						"derivedColumn1 aggregate(groupBy(entrega_id),",
+						"     pedido_id = first(pedido_id),",
+						"          repartidor_id = first(repartidor_id),",
+						"          hora_salida = first(hora_salida),",
+						"          hora_entrega = first(hora_entrega),",
+						"          tiempo_entrega_min = first(tiempo_entrega_min),",
+						"          distancia_km = first(distancia_km),",
+						"          estado_entrega = first(estado_entrega)) ~> aggregate1",
+						"aggregate1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     input(",
 						"          entrega_id as string,",
@@ -2399,6 +2420,9 @@
 					"transformations": [
 						{
 							"name": "derivedColumn1"
+						},
+						{
+							"name": "aggregate1"
 						}
 					],
 					"scriptLines": [
@@ -2422,7 +2446,16 @@
 						"          salidas = toInteger(trim(salidas)),",
 						"          stock_final = toInteger(trim(stock_final)),",
 						"          punto_reorden = toInteger(trim(punto_reorden))) ~> derivedColumn1",
-						"derivedColumn1 sink(allowSchemaDrift: true,",
+						"derivedColumn1 aggregate(groupBy(inventario_id),",
+						"     fecha_inventario = first(fecha_inventario),",
+						"          sucursal_id = first(sucursal_id),",
+						"          producto_id = first(producto_id),",
+						"          stock_inicial = first(stock_inicial),",
+						"          entradas = first(entradas),",
+						"          salidas = first(salidas),",
+						"          stock_final = first(stock_final),",
+						"          punto_reorden = first(punto_reorden)) ~> aggregate1",
+						"aggregate1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     input(",
 						"          inventario_id as string,",
@@ -2490,6 +2523,9 @@
 					"transformations": [
 						{
 							"name": "derivedColumn1"
+						},
+						{
+							"name": "aggregate1"
 						}
 					],
 					"scriptLines": [
@@ -2506,7 +2542,13 @@
 						"     ignoreNoFilesFound: false) ~> source1",
 						"source1 derive(monto_pagado = toDecimal(trim(monto_pagado)),",
 						"          fecha_pago = toDate(trim(fecha_pago))) ~> derivedColumn1",
-						"derivedColumn1 sink(allowSchemaDrift: true,",
+						"derivedColumn1 aggregate(groupBy(pago_id),",
+						"     pedido_id = first(pedido_id),",
+						"          fecha_pago = first(fecha_pago),",
+						"          metodo_pago = first(metodo_pago),",
+						"          estado_pago = first(estado_pago),",
+						"          monto_pagado = first(monto_pagado)) ~> aggregate1",
+						"aggregate1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     input(",
 						"          pago_id as string,",
@@ -2560,6 +2602,9 @@
 					"transformations": [
 						{
 							"name": "derivedColumn1"
+						},
+						{
+							"name": "aggregate1"
 						}
 					],
 					"scriptLines": [
@@ -2589,7 +2634,21 @@
 						"          impuesto = toDecimal(impuesto),",
 						"          total_pedido = toDecimal(total_pedido),",
 						"          fecha_pedido = iif(isNull(toDate(fecha_pedido, 'yyyy-MM-dd')), currentTimestamp(), toTimestamp(fecha_pedido, 'yyyy-MM-dd'))) ~> derivedColumn1",
-						"derivedColumn1 sink(allowSchemaDrift: true,",
+						"derivedColumn1 aggregate(groupBy(pedido_id),",
+						"     fecha_pedido = first(fecha_pedido),",
+						"          hora_pedido = first(hora_pedido),",
+						"          cliente_id = first(cliente_id),",
+						"          sucursal_id = first(sucursal_id),",
+						"          canal = first(canal),",
+						"          tipo_servicio = first(tipo_servicio),",
+						"          estado_pedido = first(estado_pedido),",
+						"          promocion_id = first(promocion_id),",
+						"          subtotal = first(subtotal),",
+						"          costo_delivery = first(costo_delivery),",
+						"          descuento = first(descuento),",
+						"          impuesto = first(impuesto),",
+						"          total_pedido = first(total_pedido)) ~> aggregate1",
+						"aggregate1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     input(",
 						"          pedido_id as string,",
@@ -2670,6 +2729,9 @@
 						},
 						{
 							"name": "split1"
+						},
+						{
+							"name": "aggregate1"
 						}
 					],
 					"scriptLines": [
@@ -2687,7 +2749,7 @@
 						"source1 derive(nombre_producto = initCap(lower(trim(nombre_producto))),",
 						"          categoria = iif(isNull(categoria) || toString(categoria) == 'NULL' || trim(toString(categoria)) == '', 'General', initCap(lower(trim(toString(categoria))))),",
 						"          disponible = initCap(lower(trim(disponible))),",
-						"          precio_texto = iif(isNull(precio_lista) || toString(precio_lista) == '', toDecimal(0.0, 10, 2), toDecimal(precio_lista, 10, 2)),",
+						"          precio_lista = iif(isNull(precio_lista) || toString(precio_lista) == '' || !isDecimal(toString(precio_lista)), toDecimal(0.0, 10, 2), toDecimal(precio_lista, 10, 2)),",
 						"          costo_estimado = iif(\r",
 						"    isNull(costo_estimado) || toString(costo_estimado) == 'NULL' || trim(toString(costo_estimado)) == '',\r",
 						"    toDecimal(null()),\r",
@@ -2696,7 +2758,13 @@
 						"          producto_id = trim(toString(producto_id))) ~> derivedColumn1",
 						"derivedColumn1 split(!isNull(producto_id) && !isNull(precio_lista) && !isNull(costo_estimado),",
 						"     disjoint: false) ~> split1@(validos, rechazados)",
-						"split1@validos sink(allowSchemaDrift: true,",
+						"split1@validos aggregate(groupBy(producto_id),",
+						"     nombre_producto = first(nombre_producto),",
+						"          categoria = first(categoria),",
+						"          precio_lista = first(precio_lista),",
+						"          costo_estimado = first(costo_estimado),",
+						"          disponible = first(disponible)) ~> aggregate1",
+						"aggregate1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     input(",
 						"          producto_id as string,",
