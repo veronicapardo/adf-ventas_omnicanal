@@ -62,7 +62,7 @@
 				"          salidas = first(salidas),",
 				"          stock_final = first(stock_final),",
 				"          punto_reorden = first(punto_reorden)) ~> aggregate1",
-				"derivedColumn1 split(!isNull(sucursal_id) && toString(sucursal_id) != '' && sucursal_id != 'SUC013',",
+				"derivedColumn1 split(!isNull(sucursal_id) && toString(sucursal_id) != '' && sucursal_id != 'SUC013' && !isInteger(sucursal_id),",
 				"     disjoint: false) ~> split1@(valido, rechazado)",
 				"aggregate1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
