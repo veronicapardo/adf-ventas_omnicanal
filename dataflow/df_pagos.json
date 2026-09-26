@@ -24,6 +24,9 @@
 			"transformations": [
 				{
 					"name": "derivedColumn1"
+				},
+				{
+					"name": "aggregate1"
 				}
 			],
 			"scriptLines": [
@@ -40,7 +43,13 @@
 				"     ignoreNoFilesFound: false) ~> source1",
 				"source1 derive(monto_pagado = toDecimal(trim(monto_pagado)),",
 				"          fecha_pago = toDate(trim(fecha_pago))) ~> derivedColumn1",
-				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"derivedColumn1 aggregate(groupBy(pago_id),",
+				"     pedido_id = first(pedido_id),",
+				"          fecha_pago = first(fecha_pago),",
+				"          metodo_pago = first(metodo_pago),",
+				"          estado_pago = first(estado_pago),",
+				"          monto_pagado = first(monto_pagado)) ~> aggregate1",
+				"aggregate1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          pago_id as string,",

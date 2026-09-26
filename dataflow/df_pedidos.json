@@ -24,6 +24,9 @@
 			"transformations": [
 				{
 					"name": "derivedColumn1"
+				},
+				{
+					"name": "aggregate1"
 				}
 			],
 			"scriptLines": [
@@ -53,7 +56,21 @@
 				"          impuesto = toDecimal(impuesto),",
 				"          total_pedido = toDecimal(total_pedido),",
 				"          fecha_pedido = iif(isNull(toDate(fecha_pedido, 'yyyy-MM-dd')), currentTimestamp(), toTimestamp(fecha_pedido, 'yyyy-MM-dd'))) ~> derivedColumn1",
-				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"derivedColumn1 aggregate(groupBy(pedido_id),",
+				"     fecha_pedido = first(fecha_pedido),",
+				"          hora_pedido = first(hora_pedido),",
+				"          cliente_id = first(cliente_id),",
+				"          sucursal_id = first(sucursal_id),",
+				"          canal = first(canal),",
+				"          tipo_servicio = first(tipo_servicio),",
+				"          estado_pedido = first(estado_pedido),",
+				"          promocion_id = first(promocion_id),",
+				"          subtotal = first(subtotal),",
+				"          costo_delivery = first(costo_delivery),",
+				"          descuento = first(descuento),",
+				"          impuesto = first(impuesto),",
+				"          total_pedido = first(total_pedido)) ~> aggregate1",
+				"aggregate1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          pedido_id as string,",

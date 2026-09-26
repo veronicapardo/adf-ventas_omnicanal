@@ -27,6 +27,9 @@
 				},
 				{
 					"name": "split1"
+				},
+				{
+					"name": "aggregate1"
 				}
 			],
 			"scriptLines": [
@@ -44,7 +47,7 @@
 				"source1 derive(nombre_producto = initCap(lower(trim(nombre_producto))),",
 				"          categoria = iif(isNull(categoria) || toString(categoria) == 'NULL' || trim(toString(categoria)) == '', 'General', initCap(lower(trim(toString(categoria))))),",
 				"          disponible = initCap(lower(trim(disponible))),",
-				"          precio_texto = iif(isNull(precio_lista) || toString(precio_lista) == '', toDecimal(0.0, 10, 2), toDecimal(precio_lista, 10, 2)),",
+				"          precio_lista = iif(isNull(precio_lista) || toString(precio_lista) == '' || !isDecimal(toString(precio_lista)), toDecimal(0.0, 10, 2), toDecimal(precio_lista, 10, 2)),",
 				"          costo_estimado = iif(\r",
 				"    isNull(costo_estimado) || toString(costo_estimado) == 'NULL' || trim(toString(costo_estimado)) == '',\r",
 				"    toDecimal(null()),\r",
@@ -53,7 +56,13 @@
 				"          producto_id = trim(toString(producto_id))) ~> derivedColumn1",
 				"derivedColumn1 split(!isNull(producto_id) && !isNull(precio_lista) && !isNull(costo_estimado),",
 				"     disjoint: false) ~> split1@(validos, rechazados)",
-				"split1@validos sink(allowSchemaDrift: true,",
+				"split1@validos aggregate(groupBy(producto_id),",
+				"     nombre_producto = first(nombre_producto),",
+				"          categoria = first(categoria),",
+				"          precio_lista = first(precio_lista),",
+				"          costo_estimado = first(costo_estimado),",
+				"          disponible = first(disponible)) ~> aggregate1",
+				"aggregate1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          producto_id as string,",

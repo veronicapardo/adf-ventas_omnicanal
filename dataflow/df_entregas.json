@@ -24,6 +24,9 @@
 			"transformations": [
 				{
 					"name": "derivedColumn1"
+				},
+				{
+					"name": "aggregate1"
 				}
 			],
 			"scriptLines": [
@@ -43,10 +46,17 @@
 				"source1 derive(estado_entrega = initCap(lower(trim(estado_entrega))),",
 				"          tiempo_entrega_min = abs(toDecimal(tiempo_entrega_min)),",
 				"          distancia_km = toDecimal(trim(distancia_km)),",
-				"          hora_salida = toTimestamp(hora_salida)\r",
-				",",
+				"          hora_salida = toTimestamp(hora_salida),",
 				"          hora_entrega = toTimestamp(hora_entrega)) ~> derivedColumn1",
-				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"derivedColumn1 aggregate(groupBy(entrega_id),",
+				"     pedido_id = first(pedido_id),",
+				"          repartidor_id = first(repartidor_id),",
+				"          hora_salida = first(hora_salida),",
+				"          hora_entrega = first(hora_entrega),",
+				"          tiempo_entrega_min = first(tiempo_entrega_min),",
+				"          distancia_km = first(distancia_km),",
+				"          estado_entrega = first(estado_entrega)) ~> aggregate1",
+				"aggregate1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          entrega_id as string,",
