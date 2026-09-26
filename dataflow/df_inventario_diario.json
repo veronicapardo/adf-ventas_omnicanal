@@ -27,6 +27,9 @@
 				},
 				{
 					"name": "aggregate1"
+				},
+				{
+					"name": "split1"
 				}
 			],
 			"scriptLines": [
@@ -50,7 +53,7 @@
 				"          stock_inicial = iif(isNull(stock_inicial) || toString(stock_inicial) == '' || !isInteger(toString(stock_inicial)), 0, toInteger(stock_inicial)),",
 				"          stock_final = iif(isNull(stock_final) || toString(stock_final) == '' || !isInteger(toString(stock_final)), 0, toInteger(stock_final)),",
 				"          punto_reorden = toInteger(trim(punto_reorden))) ~> derivedColumn1",
-				"derivedColumn1 aggregate(groupBy(inventario_id),",
+				"split1@valido aggregate(groupBy(inventario_id),",
 				"     fecha_inventario = first(fecha_inventario),",
 				"          sucursal_id = first(sucursal_id),",
 				"          producto_id = first(producto_id),",
@@ -59,6 +62,8 @@
 				"          salidas = first(salidas),",
 				"          stock_final = first(stock_final),",
 				"          punto_reorden = first(punto_reorden)) ~> aggregate1",
+				"derivedColumn1 split(!isNull(sucursal_id) && toString(sucursal_id) != '',",
+				"     disjoint: false) ~> split1@(valido, rechazado)",
 				"aggregate1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",

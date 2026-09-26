@@ -27,6 +27,9 @@
 				},
 				{
 					"name": "aggregate1"
+				},
+				{
+					"name": "split1"
 				}
 			],
 			"scriptLines": [
@@ -57,7 +60,7 @@
 				"          total_pedido = toDecimal(total_pedido),",
 				"          fecha_pedido = iif(isNull(toDate(fecha_pedido, 'yyyy-MM-dd')), currentTimestamp(), toTimestamp(fecha_pedido, 'yyyy-MM-dd')),",
 				"          cliente_id = !isNull(cliente_id) && toString(cliente_id) != '') ~> derivedColumn1",
-				"derivedColumn1 aggregate(groupBy(pedido_id),",
+				"split1@valido aggregate(groupBy(pedido_id),",
 				"     fecha_pedido = first(fecha_pedido),",
 				"          hora_pedido = first(hora_pedido),",
 				"          cliente_id = first(cliente_id),",
@@ -71,6 +74,8 @@
 				"          descuento = first(descuento),",
 				"          impuesto = first(impuesto),",
 				"          total_pedido = first(total_pedido)) ~> aggregate1",
+				"derivedColumn1 split(!isNull(cliente_id) && toString(cliente_id) != '',",
+				"     disjoint: false) ~> split1@(valido, rechazado)",
 				"aggregate1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
